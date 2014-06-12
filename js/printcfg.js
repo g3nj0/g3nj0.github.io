@@ -46,6 +46,7 @@ writeCfgFile = function () {
     appendNewCommand("snd_headphone_pan_exponent", $("#panexp_slider"));       // 8
     appendNewCommand("snd_headphone_pan_radial_weight", $("#panrad_slider"));  // 8
     appendNewCheckedCommand("snd_legacy_surround", $('#legacy'));
+    appendNewCheckedCommand("dsp_enhance_stereo", $('#enhancestereo'));
     appendNewCheckedCommand("snd_mute_losefocus", $('#mutelosefocus'));
     appendNewCheckedCommand("lobby_voice_chat_enabled", $('#voiceenablelobby'));
 
@@ -100,13 +101,20 @@ writeCfgFile = function () {
     appendNewCommand("cl_bobamt_vert", $("#bobvert_slider"));                             // 8
     appendNewCommand("cl_viewmodel_shift_left_amt", $("#viewmodel_shift_left_slider"));   // 8
     appendNewCommand("cl_viewmodel_shift_right_amt", $("#viewmodel_shift_right_slider")); // 8
+
     // ========================================================================
-    appendNewCommand("viewmodel_presetpos", $("select[name=viewmodel_preset]")); //== 2
+    if ($("select[name=viewmodel_preset]").val() != 0) {
+        appendNewCommand("viewmodel_presetpos", $("select[name=viewmodel_preset]")); //== 2
+    }
+
     appendNewCommand("viewmodel_fov", $("#viewmodel_fov"));                      // 7
-    appendNewCommand("viewmodel_offset_x", $("#viewmodel_offset_x_slider"));     // 9
-    appendNewCommand("viewmodel_offset_y", $("#viewmodel_offset_y_slider"));     // 9
-    appendNewCommand("viewmodel_offset_z", $("#viewmodel_offset_z_slider"));     // 9
-    
+
+    if ($("select[name=viewmodel_preset]").val() == 0) {
+        appendNewCommand("viewmodel_offset_x", $("#viewmodel_offset_x_slider"));     // 9
+        appendNewCommand("viewmodel_offset_y", $("#viewmodel_offset_y_slider"));     // 9
+        appendNewCommand("viewmodel_offset_z", $("#viewmodel_offset_z_slider"));     // 9
+    }
+
     autoexecText += "\n// =============== Mouse settings ===============\n\n"; // Mouse
     autoexecText += "// DPI = " + $('#dpi_slider').val() + "\n"
     appendNewCommand("sensitivity", $('#sens_slider'));                     // 10
@@ -116,20 +124,30 @@ writeCfgFile = function () {
 
     autoexecText += "\n// ============ Crosshair settings ============\n\n";  // Crosshair
     appendNewCommand("cl_crosshairstyle", $("select[name=crosshairstyle]"));                        //== 3
-    appendNewCommand("cl_crosshair_dynamic_maxdist_splitratio",$('#crosshairdynmaxdist_slider'));   // 7
-    appendNewCommand("cl_crosshair_dynamic_splitalpha_innermod",$('#crosshairalphainner_slider'));  // 7
-    appendNewCommand("cl_crosshair_dynamic_splitalpha_outermod", $('#crosshairalphaouter_slider')); // 7
-    appendNewCommand("cl_crosshair_dynamic_splitdist", $('#crosshairsplitdist_slider'));            // 7
+
+    if ($('select[name=crosshairstyle]').val() == 2) {
+        appendNewCommand("cl_crosshair_dynamic_maxdist_splitratio", $('#crosshairdynmaxdist_slider'));   // 7
+        appendNewCommand("cl_crosshair_dynamic_splitalpha_innermod", $('#crosshairalphainner_slider'));  // 7
+        appendNewCommand("cl_crosshair_dynamic_splitalpha_outermod", $('#crosshairalphaouter_slider'));  // 7
+        appendNewCommand("cl_crosshair_dynamic_splitdist", $('#crosshairsplitdist_slider'));             // 7
+    }
+
     appendNewCommand("cl_crosshaircolor", $("select[name=crosshaircolor]"));                        //== 3
     // ========================================================================
-    appendNewCommand("cl_crosshaircolor_r", $("#crosshaircolorr_slider"));  // 8
-    appendNewCommand("cl_crosshaircolor_g", $("#crosshaircolorg_slider"));  // 8
-    appendNewCommand("cl_crosshaircolor_b", $("#crosshaircolorb_slider"));  // 8
-    appendNewCommand("cl_crosshairalpha", $("#crosshairalpha_slider"));     // 8
+    if ($('select[name=crosshaircolor]').val() == 5) {
+        appendNewCommand("cl_crosshaircolor_r", $("#crosshaircolorr_slider"));  // 8
+        appendNewCommand("cl_crosshaircolor_g", $("#crosshaircolorg_slider"));  // 8
+        appendNewCommand("cl_crosshaircolor_b", $("#crosshaircolorb_slider"));  // 8
+    }
+    appendNewCommand("cl_crosshairalpha", $("#crosshairalpha_slider"));         // 8
     // ========================================================================
     appendNewCommand("cl_crosshairsize", $("#crosshairsize_slider"));           // 7
     appendNewCommand("cl_crosshairthickness", $("#crosshairthickness_slider")); // 7
     appendNewCommand("cl_crosshairgap", $("#crosshairgap_slider"));             // 8
+
+    if ($('select[name=crosshairstyle]').val() == 1)
+        appendNewCommand("cl_fixedcrosshairgap", $('#crosshairfixedgap_slider'));   // 11
+
     appendNewCheckedCommand("cl_crosshairdot", $("#crosshairdot"));              
     appendNewCheckedCommand("cl_crosshair_drawoutline", $("#crosshairoutline"));
     appendNewCommand("cl_crosshair_outlinethickness", $("#crosshairoutlinethickness_slider")); // 2

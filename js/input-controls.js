@@ -7,9 +7,9 @@
 //    of autoexec.cfg settings.
 //==============================================================
 
-//                 0                            10                            20                              30                               40
-var inputBits  = [17, 8, 8, 6, 8, 9, 9, 9, 7, 7, 7, 7, 8, 8, 7, 7, 7, 7, 8, 7, 7, 12, 12, 5, 8, 8, 8, 8, 7, 9, 9, 9, 12, 10, 10, 10, 7, 7, 7, 7, 8, 8, 8, 8, 12, 12, 8, 2];
-var inputBitTotal = 399;
+//                 0                            10                            20                              30                                40
+var inputBits  = [17, 8, 8, 6, 8, 9, 9, 9, 7, 7, 7, 7, 8, 8, 7, 7, 7, 7, 8, 7, 7, 12, 12, 5, 8, 8, 8, 8, 7, 9, 9, 9, 12, 10, 10, 10, 7, 7, 7, 7, 8, 8, 8, 8, 12, 12, 8, 11, 2];
+var inputBitTotal = 410;
 var selectBits = [3, 4, 2, 3, 2, 3, 3, 3, 2, 3];
 var selectBitTotal = 28;
 
@@ -98,9 +98,10 @@ DecodeCfgValues = function () {
         var rangeValue = parseInt(rangeInfo, 2);
         //console.log(rangeIndex);
         //console.log(rangeValue + "\n");
-        if ($(this).is($('#sens_slider')))
+        /*
+        if ($(this).is($('#crosshairgap_slider')))
             console.log("Desired index - " + index);
-
+        //*/
         if ($(this).attr('step') < 1){
             rangeValue *= 0.01;
 
@@ -112,14 +113,17 @@ DecodeCfgValues = function () {
         }
 
         if ($(this).is($('#crosshairgap_slider')))
-             rangeValue -= 100;
+            rangeValue -= 100;
 
+        if ($(this).is($('#crosshairfixedgap_slider')))
+            rangeValue -= 999;
+       
         $(this).val(rangeValue);
         rangeNum[index].value = rangeValue;
     })
 
     $('#xhair_colorpicker').val(RGBToColorValue(crosshaircolorrObj.val(), crosshaircolorgObj.val(), crosshaircolorbObj.val()));
-
+    SetInputDisabledState();
     //*/
 };
 
@@ -176,10 +180,12 @@ EncodeCfgValues = function () {
 
             s *= 100;
         }
-        else if ($(this).is($('#crosshairgap_slider'))){
+
+        if ($(this).is($('#crosshairgap_slider')))
             s += 100;
-        }
-        //console.log(s.toString(2));
+        
+        if ($(this).is($('#crosshairfixedgap_slider')))
+            s += 999; 
 
         valueStr = s.toString(2);
 
@@ -242,6 +248,8 @@ $(document).ready(function () {
     })
     // When can select box is changed the writeCfgFile method is called
     $("select").change(function () {
+        SetInputDisabledState();
+
         window.clearTimeout(printEvent);
         printEvent = window.setTimeout(writeCfgFile, 0);
     })
@@ -315,3 +323,113 @@ $(document).ready(function () {
         e.preventDefault();
     });
 });
+
+SetInputDisabledState = function () {
+
+    if ($('select[name=crosshairstyle]').val() == 1) {
+        $('#crosshairfixedgap').prop('disabled', false);
+        $('#crosshairfixedgap_slider').prop('disabled', false);
+    }
+    else if ($('select[name=crosshairstyle]').val() == 2) {
+        $('#crosshairdynmaxdist').prop('disabled', false);
+        $('#crosshairalphainner').prop('disabled', false);
+        $('#crosshairalphaouter').prop('disabled', false);
+        $('#crosshairsplitdist').prop('disabled', false);
+        $('#crosshairdynmaxdist_slider').prop('disabled', false);
+        $('#crosshairalphainner_slider').prop('disabled', false);
+        $('#crosshairalphaouter_slider').prop('disabled', false);
+        $('#crosshairsplitdist_slider').prop('disabled', false);
+
+        $('#crosshairfixedgap').prop('disabled', true);
+        $('#crosshairfixedgap_slider').prop('disabled', true);
+    }
+    else {
+        $('#crosshairdynmaxdist').prop('disabled', true);
+        $('#crosshairalphainner').prop('disabled', true);
+        $('#crosshairalphaouter').prop('disabled', true);
+        $('#crosshairsplitdist').prop('disabled', true);
+        $('#crosshairdynmaxdist_slider').prop('disabled', true);
+        $('#crosshairalphainner_slider').prop('disabled', true);
+        $('#crosshairalphaouter_slider').prop('disabled', true);
+        $('#crosshairsplitdist_slider').prop('disabled', true);
+
+        $('#crosshairfixedgap').prop('disabled', true);
+        $('#crosshairfixedgap_slider').prop('disabled', true);
+    }
+
+    if ($('select[name=crosshaircolor]').val() == 5) {
+        $('#xhair_colorpicker').prop('disabled', false);
+        $('#crosshaircolorr').prop('disabled', false);
+        $('#crosshaircolorg').prop('disabled', false);
+        $('#crosshaircolorb').prop('disabled', false);
+        $('#crosshaircolorr_slider').prop('disabled', false);
+        $('#crosshaircolorg_slider').prop('disabled', false);
+        $('#crosshaircolorb_slider').prop('disabled', false);
+    }
+    else {
+        $('#xhair_colorpicker').prop('disabled', true);
+        $('#crosshaircolorr').prop('disabled', true);
+        $('#crosshaircolorg').prop('disabled', true);
+        $('#crosshaircolorb').prop('disabled', true);
+        $('#crosshaircolorr_slider').prop('disabled', true);
+        $('#crosshaircolorg_slider').prop('disabled', true);
+        $('#crosshaircolorb_slider').prop('disabled', true);
+    }
+
+    if ($('select[name=viewmodel_preset]').val() == 0) {
+        $('#viewmodel_offset_x_slider').prop('disabled', false);
+        $('#viewmodel_offset_y_slider').prop('disabled', false);
+        $('#viewmodel_offset_z_slider').prop('disabled', false);
+        $('#viewmodel_offset_x').prop('disabled', false);
+        $('#viewmodel_offset_y').prop('disabled', false);
+        $('#viewmodel_offset_z').prop('disabled', false);
+    }
+    else if ($('select[name=viewmodel_preset]').val() == 1) {
+        // Disable all the inputs for viewmodel offsets
+        $('#viewmodel_offset_x_slider').prop('disabled', true);
+        $('#viewmodel_offset_y_slider').prop('disabled', true);
+        $('#viewmodel_offset_z_slider').prop('disabled', true);
+        $('#viewmodel_offset_x').prop('disabled', true);
+        $('#viewmodel_offset_y').prop('disabled', true);
+        $('#viewmodel_offset_z').prop('disabled', true);
+
+        $('#viewmodel_offset_x_slider').val(1);
+        $('#viewmodel_offset_y_slider').val(1);
+        $('#viewmodel_offset_z_slider').val(-1);
+        $('#viewmodel_offset_x').val(1);
+        $('#viewmodel_offset_y').val(1);
+        $('#viewmodel_offset_z').val(-1);
+    }
+    else if ($('select[name=viewmodel_preset]').val() == 2) {
+        // Disable all the inputs for viewmodel offsets
+        $('#viewmodel_offset_x_slider').prop('disabled', true);
+        $('#viewmodel_offset_y_slider').prop('disabled', true);
+        $('#viewmodel_offset_z_slider').prop('disabled', true);
+        $('#viewmodel_offset_x').prop('disabled', true);
+        $('#viewmodel_offset_y').prop('disabled', true);
+        $('#viewmodel_offset_z').prop('disabled', true);
+
+        $('#viewmodel_offset_x_slider').val(0);
+        $('#viewmodel_offset_y_slider').val(0);
+        $('#viewmodel_offset_z_slider').val(0);
+        $('#viewmodel_offset_x').val(0);
+        $('#viewmodel_offset_y').val(0);
+        $('#viewmodel_offset_z').val(0);
+    }
+    else if ($('select[name=viewmodel_preset]').val() == 3) {
+        // Disable all the inputs for viewmodel offsets
+        $('#viewmodel_offset_x_slider').prop('disabled', true);
+        $('#viewmodel_offset_y_slider').prop('disabled', true);
+        $('#viewmodel_offset_z_slider').prop('disabled', true);
+        $('#viewmodel_offset_x').prop('disabled', true);
+        $('#viewmodel_offset_y').prop('disabled', true);
+        $('#viewmodel_offset_z').prop('disabled', true);
+
+        $('#viewmodel_offset_x_slider').val(2.5);
+        $('#viewmodel_offset_y_slider').val(0);
+        $('#viewmodel_offset_z_slider').val(-1.5);
+        $('#viewmodel_offset_x').val(2.5);
+        $('#viewmodel_offset_y').val(0);
+        $('#viewmodel_offset_z').val(-1.5);
+    }
+};

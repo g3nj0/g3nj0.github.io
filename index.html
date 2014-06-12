@@ -13,7 +13,7 @@
     <p>Adjust settings for your autoexec.cfg and when you are ready just press the "download autoexec" button.
        When prompted to save, navigate to your Steam directory, then to ... <br /><br />&#60Your Steam Dir&#62\SteamApps\common\Counter-Strike Global Offensive\csgo\cfg<br /><br />
        and save the file there.
-       <!--<br /><br />Mousing over the [insert image] will provide you with additional information--></p>
+       <br /><br />Mousing over the <img src="images/info.png" /> will provide you with additional information!</p>
         <form id="rateform">
             <fieldset id="rateset">
                 <legend><b>Rates</b></legend>
@@ -140,24 +140,30 @@
                        min="1.6"
                        max="2.6"
                        maxlength="3"
-                       onchange="this.form.gamma_slider.value = this.value" /> 1.6 - 2.6 <br />
+                       onchange="this.form.gamma_slider.value = this.value" /> 1.6 - 2.6 <img src="images/info.png" onmouseover="nhpup.popup('1.6 Brightest --- 2.6 Darkest');"/><br />
 
                 <label for="maxfps">Max FPS</label>
                 <input type="range"
                        name="video"
                        id="maxfps_slider"
-                       value="120"
+                       value="128"
                        min="0"
                        max="300"
                        onchange="this.form.maxfps.value = this.value" />
                 <input type="number"
                        name="video"
                        id="maxfps"
-                       value="120"
+                       value="128"
+                       list="fpsmax_suggestions"
                        min="0"
                        max="300"
                        maxlength="3"
-                       onchange="this.form.maxfps_slider.value = this.value" /> 0 - 300 <br />
+                       onchange="this.form.maxfps_slider.value = this.value" /> 0 - 300 <img src="images/info.png" onmouseover="nhpup.popup('Set to 0 (zero) for infinite fps max', { 'width' : 220 });" /><br />
+
+                <datalist id="fpsmax_suggestions">
+                    <option value="0"></option>
+                    <option value="128"></option>
+                </datalist>
 
                 <label for="maxfps_menu">Max FPS in Menu</label>
                 <input type="range"
@@ -209,13 +215,13 @@
                        step="0.01"
                        min="0.0"
                        max="1.0"
-                       maxlength="3"
+                       maxlength="4"
                        onchange="this.form.volume_slider.value = this.value" /> 0.0 - 1.0 <br />
 
                 <label for="voiceenable">Voice Enable</label>
                 <input type="checkbox"
                        name="audio"
-                       id="voiceenable" /> <br />
+                       id="voiceenable" checked /> <br />
 
                 <label for="volume">Voice Scale</label>
                 <input type="range"
@@ -300,7 +306,7 @@
                        min="0.0"
                        max="2.0"
                        maxlength="3"
-                       onchange="this.form.panexp_slider.value = this.value" /> 0.0 - 2.0 <br />
+                       onchange="this.form.panexp_slider.value = this.value" /> 0.0 - 2.0 <img src="images/info.png" onmouseover="nhpup.popup('A value of 2 is considered to be an optimal setting for pan exponent and radial weight.');" /><br />
 
                 <label for="panrad">Headphone Pan Radial Weight</label>
                 <input type="range"
@@ -325,6 +331,11 @@
                 <input type="checkbox"
                        name="audio"
                        id="legacy" /> <br />
+
+                <label for="enhancestereo">Enhanced Stereo</label>
+                <input type="checkbox"
+                       name="audio"
+                       id="enhancestereo" /><img src="images/info.png" onmouseover="nhpup.popup('If set to 1 (checked) enhances the stereo effect, making sound richer and more atmospheric for a slight performance hit.');" /> <br />
 
                 <label for="mutelosefocus">Mute Game When Minimized</label>
                 <input type="checkbox"
@@ -437,7 +448,7 @@
                 <label for="showplayercount">Show Player Count</label>
                 <input type="checkbox"
                        name="hud"
-                       id="showplayercount" /> <br />
+                       id="showplayercount" /> <img src="images/info.png" onmouseover="nhpup.popup('<img src=images/showplayercount_0.jpg> cl_hud_playercount_showcount &quot0&quot<br><br> <img src=images/showplayercount_1.jpg><br>cl_hud_playercount_showcount &quot1&quot', { 'width': 436 })" /> <br />
 
                 <label for="playercountpos">Player Count Position</label>
                 <input type="checkbox"
@@ -457,7 +468,7 @@
                 <label for="healthammo">Health and Ammo Style</label>
                 <input type="checkbox"
                        name="hud"
-                       id="healthammo" /> <br />
+                       id="healthammo" /> <img src="images/info.png" onmouseover="nhpup.popup('<img src=images/healthammo_0.jpg> cl_hud_healthammo_style &quot&#48&quot<br><br> <img src=images/healthammo_1.jpg> cl_hud_healthammo_style &quot&#49&quot', { 'width': 410 })" /><br />
 
                 <label for="showloadout">Show Loadout</label>
                 <input type="checkbox"
@@ -541,14 +552,14 @@
                 <label for="radarrotates">Radar Rotates</label>
                 <input type="checkbox"
                        name="hud"
-                       id="radarrotates" /> <br />
+                       id="radarrotates" checked/> <br />
 
                 <hr /> <!--===================================================-->
 
                 <label for="developer">Developer</label>
                 <input type="checkbox"
                        name="hud"
-                       id="developer" /> Displays console in the top left<br />
+                       id="developer" /><img src="images/info.png" onmouseover="nhpup.popup('Displays console in the top left');" /><br />
 
                 <label for="confilterenable">Console Damage Filter</label>
                 <select name="confilterenable">
@@ -620,7 +631,7 @@
                        min="0"
                        max="3000"
                        maxlength="4"
-                       onchange="this.form.netgraphpos_slider.value = this.value" /> 0 - 3000 <br />
+                       onchange="this.form.netgraphpos_slider.value = this.value" /> 0 - 3000 <img src="images/info.png" onmouseover="    nhpup.popup('0 - net_graph on the left<br>1 - net_graph on the right<br>2 - net_graph in the center<br><br>>= 3 - Specifies position from the left side of the screen.');" /><br />
 
                 <datalist id="netgraphpos_suggestions">
                     <option value="0">0 : left</option>
@@ -924,7 +935,7 @@
                     <option value="3">3 : Classic Dynamic</option>
                     <option value="4">4 : Classic Static</option>
                     <option value="5">5 : Classic Recoil Only</option>
-                </select>
+                </select><img src="images/info.png" onmouseover="nhpup.popup('<img src=images/crosshair_0.jpg><br>cl_crosshairstyle &quot0&quot<br><br><img src=images/crosshair_1.jpg><br>cl_crosshairstyle &quot1&quot<br><br><img src=images/crosshair_2.jpg><br>cl_crosshairstyle &quot2&quot');" />
                 <br />
                 <br />
                 <label class="inputlabels-center">These settings only apply to Crosshair Style 2</label><br /><br />
@@ -1013,7 +1024,9 @@
                     <option value="4">4 : Light Blue</option>
                     <option value="5">5 : Custom Color</option>
                 </select>
-                
+                <br />
+                <br />
+                <label for="xhair_colorpicker" class="inputlabels-center">Crosshair Style 0 and 1 are not affected by Crosshair Color. <br />You must change the color in the game settings!</label><br />
                 <label for="xhair_colorpicker" class="inputlabels-center">Crosshair Color must be set to 5 to use RGB color settings</label><br />
                 <label for="xhair_colorpicker" class="inputlabels-center">Choose a crosshair color! Click here =></label>
 
@@ -1142,6 +1155,22 @@
                        max="100"
                        onchange="this.form.crosshairgap_slider.value=this.value" /> -100 - 100 <br />
 
+                <label for="crosshairfixedgap">Fixed Crosshair Gap</label>
+                <input type="range"
+                       name="crosshair"
+                       id="crosshairfixedgap_slider"
+                       value="1"
+                       min="-999"
+                       max="999"
+                       onchange="this.form.crosshairfixedgap.value=this.value" />
+                <input type="number"
+                       name="crosshair"
+                       id="crosshairfixedgap"
+                       value="1"
+                       min="-999"
+                       max="999"
+                       onchange="this.form.crosshairfixedgap_slider.value=this.value" /> -999 - 999 <br />
+
                 <label for="crosshairdot">Crosshair Dot</label>
                 <input type="checkbox"
                        name="crosshair"
@@ -1185,7 +1214,7 @@
                 <label for="autoweapon">Auto Weapon Switch</label>
                 <input type="checkbox"
                        name="misc"
-                       id="autoweapon" /> <br />
+                       id="autoweapon" /> <img src="images/info.png" onmouseover="nhpup.popup('When a weapon is picked up while this is set to 1 (checked) it will be drawn automatically.  It is recommended that this command be set to 0 (unchecked). The unexpected acquistion of a weapon will render you temporarily defenseless during the time it takes to ready the gun for use.', { 'width' : 250 });" /><br />
 
                 <label for="righthand">Right Hand</label>
                 <input type="checkbox"
@@ -1226,7 +1255,7 @@
                     <option value="0">0 : No Coloring</option>
                     <option value="1">1 : Displays Teammate's Colors</option>
                     <option value="2">2 : Colors + Letters</option>
-                </select><br />
+                </select><img src="images/info.png" onmouseover="nhpup.popup('<img src=images/teamcolor_1.jpg><br>cl_teammate_colors_show &quot1&quot<br><br><img src=images/teamcolor_2.jpg><br>cl_teammate_colors_show &quot2&quot');"/><br />
 
                 <label for="selfcolor">Preferred Color for Radar</label>
                 <select name="selfcolor">
@@ -1304,6 +1333,7 @@
         </script><br />
     </section>
     <script src="js/jquery-2.1.1.js"></script>
+    <script type="text/javascript" src="js/nhpup_1.1.js"></script>
     <script src="js/base62.js"></script>
     <script src="js/printcfg.js"></script>
     <script src="js/input-controls.js"></script>
